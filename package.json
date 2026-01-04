@@ -1,14 +1,22 @@
 {
   "name": "excuz",
-  "version": "1.0.1",
-  "description": "A CLI that returns random humorous developer excuses in multiple languages",
+  "version": "1.0.2",
+  "description": "A CLI and library that returns random humorous developer excuses in multiple languages",
   "type": "module",
   "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
   "bin": {
-    "excuz": "./dist/index.js"
+    "excuz": "./dist/cli.js"
   },
   "scripts": {
-    "start": "node dist/index.js",
+    "start": "node dist/cli.js",
     "build": "tsup"
   },
   "keywords": [
@@ -16,6 +24,7 @@
     "developer",
     "humor",
     "cli",
+    "library",
     "random",
     "bengali",
     "english"

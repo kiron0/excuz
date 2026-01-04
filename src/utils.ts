@@ -1,15 +1,16 @@
 import { readFileSync } from "fs";
 import { dirname, join } from "path";
 import { fileURLToPath } from "url";
+import {
+  DEFAULT_LANGUAGE,
+  isValidLanguage,
+  type ExcuseData,
+  type ExcuseItem,
+  type Language,
+} from "./type.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-
-export type Language = "bn" | "en";
-export const DEFAULT_LANGUAGE: Language = "en";
-export const SUPPORTED_LANGUAGES: readonly Language[] = ["bn", "en"] as const;
-
-type ExcuseData = Array<{ text: string }>;
 
 let dataMap: Record<Language, ExcuseData> | null = null;
 
@@ -44,23 +45,21 @@ function getData(lang: Language): ExcuseData {
   return data;
 }
 
-export function isValidLanguage(lang: string): lang is Language {
-  return SUPPORTED_LANGUAGES.includes(lang as Language);
-}
-
-export function getRandomExcuse(lang: Language = DEFAULT_LANGUAGE): string {
+export function getRandomExcuse(lang: Language = DEFAULT_LANGUAGE): ExcuseItem {
   const data = getData(lang);
   const randomIndex = Math.floor(Math.random() * data.length);
-  return data[randomIndex].text;
+  return data[randomIndex];
 }
 
-export function getAllExcuses(lang: Language = DEFAULT_LANGUAGE): string[] {
-  return getData(lang).map((item) => item.text);
+export function getAllExcuses(lang: Language = DEFAULT_LANGUAGE): ExcuseItem[] {
+  return getData(lang);
 }
 
 export function getExcuseCount(lang: Language = DEFAULT_LANGUAGE): number {
   return getData(lang).length;
 }
+
+export { isValidLanguage };
 
 export const COLORS = {
   GREEN: "\x1b[32m",
